@@ -1,6 +1,7 @@
 .emacs.desktop*
 ARCHIVE
 SOW/
+example1.py
 example2.py
 register_pattern.py
 example4.py
