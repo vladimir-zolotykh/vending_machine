@@ -24,6 +24,9 @@ class Connection:
     def close(self):
         self.state = self.state.close()
 
+    def __repr__(self):
+        return f"{self.state.__class__.__name__}"
+
 
 class ConnectionState:
     def __init__(self, conn):
@@ -42,12 +45,12 @@ class OpenConnectionState(ConnectionState):
         print("Reading")
         return "Hello!", self.conn.get_state()
 
-    def write(self):
-        print("Writing")
-        return self.conn.get()
+    def write(self, data):
+        print(data)
+        return self.conn.get_state()
 
     def open(self):
-        raise RuntimeError("Already open")
+        raise RuntimeError(f"{self.conn}: already open")
 
     def close(self) -> ConnectionState:
         return ClosedConnectionState(self.conn)
@@ -57,7 +60,7 @@ class ClosedConnectionState(ConnectionState):
     def read(self):
         raise RuntimeError("Cannot read closed connection")
 
-    def write(self):
+    def write(self, data):
         raise RuntimeError("Cannot write closed connection")
 
     def open(self) -> ConnectionState:
@@ -84,5 +87,6 @@ if __name__ == "__main__":
     c.open()
     print(c)
     c.read()
+    c.write("Bye")
     c.close()
     print(c)
