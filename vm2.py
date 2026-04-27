@@ -5,10 +5,7 @@
 
 class StateMeta(type):
     def __repr__(cls):
-        return f"<State {cls.__name__}>"
-
-    def __str__(cls):
-        return f"State: {cls.__name__}"
+        return cls.__name__
 
 
 class Connection:
