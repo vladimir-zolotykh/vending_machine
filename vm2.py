@@ -3,6 +3,14 @@
 # PYTHON_ARGCOMPLETE_OK
 
 
+class StateMeta(type):
+    def __repr__(cls):
+        return f"<State {cls.__name__}>"
+
+    def __str__(cls):
+        return f"State: {cls.__name__}"
+
+
 class Connection:
     def __init__(self):
         self.state = ClosedConnectionState(self)
@@ -25,10 +33,10 @@ class Connection:
         self.state = self.state.close()
 
     def __repr__(self):
-        return f"{self.state.__class__.__name__}"
+        return f"{self.state.__class__}"
 
 
-class ConnectionState:
+class ConnectionState(metaclass=StateMeta):
     def __init__(self, conn):
         self.conn = conn
 
