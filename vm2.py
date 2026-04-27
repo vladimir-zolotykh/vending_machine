@@ -33,7 +33,7 @@ class Connection:
         self.state = self.state.close()
 
     def __repr__(self):
-        return f"{self.state.__class__}"
+        return repr(self.state.__class__)
 
 
 class ConnectionState(metaclass=StateMeta):
