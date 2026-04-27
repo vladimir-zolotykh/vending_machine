@@ -51,13 +51,14 @@ def test_read_on_open_returns_data_and_keeps_state(capsys):
     c = Connection()
     c.open()
 
-    data = c.read()
+    new_state, data = c.read()
 
     captured = capsys.readouterr()
     assert "Reading" in captured.out
 
     assert data == "Hello!"
     assert isinstance(c.get_state(), OpenConnectionState)
+    return new_state, data
 
 
 def test_write_on_open_prints_and_keeps_state(capsys):

@@ -19,7 +19,7 @@ class Connection:
         return self.state
 
     def read(self):
-        data, new_state = self.state.read()
+        new_state, data = self.state.read()
         self.state = new_state
         return data
 
@@ -49,9 +49,9 @@ class ConnectionState(metaclass=StateMeta):
 
 
 class OpenConnectionState(ConnectionState):
-    def read(self):
+    def read(self) -> tuple[ConnectionState, str]:
         print("Reading")
-        return "Hello!", self.conn.get_state()
+        return self.conn.get_state(), "Hello!"
 
     def write(self, data):
         print(data)
