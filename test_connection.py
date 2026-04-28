@@ -13,7 +13,7 @@ from vm2 import (
 def test_initial_state_is_closed():
     c = Connection()
     assert isinstance(c.get_state(), ClosedConnectionState)
-    assert str(c) == "State: ClosedConnectionState"
+    assert str(c) == "ClosedConnectionState"
 
 
 # --- Closed state behavior ---------------------------------------------------
@@ -41,7 +41,7 @@ def test_open_transitions_to_open_state():
     c = Connection()
     c.open()
     assert isinstance(c.get_state(), OpenConnectionState)
-    assert str(c) == "State: OpenConnectionState"
+    assert str(c) == "OpenConnectionState"
 
 
 # --- Open state behavior -----------------------------------------------------
@@ -51,14 +51,13 @@ def test_read_on_open_returns_data_and_keeps_state(capsys):
     c = Connection()
     c.open()
 
-    new_state, data = c.read()
+    data = c.read()
 
     captured = capsys.readouterr()
     assert "Reading" in captured.out
 
     assert data == "Hello!"
     assert isinstance(c.get_state(), OpenConnectionState)
-    return new_state, data
 
 
 def test_write_on_open_prints_and_keeps_state(capsys):
@@ -87,7 +86,7 @@ def test_close_on_open_transitions_to_closed():
     c.close()
 
     assert isinstance(c.get_state(), ClosedConnectionState)
-    assert str(c) == "State: ClosedConnectionState"
+    assert str(c) == "ClosedConnectionState"
 
 
 # --- State transition sequence -----------------------------------------------
@@ -114,12 +113,12 @@ def test_full_lifecycle():
 
 def test_state_class_str_and_repr():
     # __str__ from metaclass
-    assert str(OpenConnectionState) == "State: OpenConnectionState"
-    assert str(ClosedConnectionState) == "State: ClosedConnectionState"
+    assert str(OpenConnectionState) == "OpenConnectionState"
+    assert str(ClosedConnectionState) == "ClosedConnectionState"
 
     # __repr__ from metaclass
-    assert repr(OpenConnectionState) == "<State OpenConnectionState>"
-    assert repr(ClosedConnectionState) == "<State ClosedConnectionState>"
+    assert repr(OpenConnectionState) == "OpenConnectionState"
+    assert repr(ClosedConnectionState) == "ClosedConnectionState"
 
 
 # --- Representation of Connection --------------------------------------------
@@ -127,7 +126,7 @@ def test_state_class_str_and_repr():
 
 def test_connection_repr_uses_state_class():
     c = Connection()
-    assert repr(c) == "<State ClosedConnectionState>"
+    assert repr(c) == "ClosedConnectionState"
 
     c.open()
-    assert repr(c) == "<State OpenConnectionState>"
+    assert repr(c) == "OpenConnectionState"
