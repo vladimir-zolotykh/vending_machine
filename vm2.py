@@ -38,10 +38,10 @@ class ConnectionState(metaclass=StateMeta):
         self.conn = conn
 
     # fmt: off
-    def read(): raise NotImplementedError()  # noqa: E704
-    def write(): raise NotImplementedError()  # noqa: E704
-    def open(): raise NotImplementedError()  # noqa: E704
-    def close(): raise NotImplementedError()  # noqa: E704
+    def read(self): raise NotImplementedError()  # noqa: E704
+    def write(self, data): raise NotImplementedError()  # noqa: E704
+    def open(self): raise NotImplementedError()  # noqa: E704
+    def close(self): raise NotImplementedError()  # noqa: E704
     # fmt: on
 
 
